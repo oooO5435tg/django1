@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.conf import settings
+from datetime import date
 # Create your models here.
 
 from django.urls import reverse  # To generate URLS by reversing URL patterns
