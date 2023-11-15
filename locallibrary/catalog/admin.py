@@ -28,11 +28,12 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre')
     inlines = [BooksInstanceInline]
 
-    def display_genre(self):
-        """Create a string for the Genre. This is required to display genre in Admin."""
-        return ', '.join([genre.name for genre in self.genre.all()[:3]
-    ])
-    display_genre.short_description = 'Genre'
+    # def display_genre(self):
+    #     """Create a string for the Genre. This is required to display genre in Admin."""
+    #     return ', '.join([genre.name for genre in self.genre.all()[:3]
+    # ])
+    # display_genre.short_description = 'Genre'
+
 
 # Register the Admin classes for BookInstance using the decorator
 

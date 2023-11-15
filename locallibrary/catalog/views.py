@@ -47,6 +47,13 @@ class BookListView(generic.ListView):
     model = Book
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get the context
+        context = super(BookListView, self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        context['some_data'] = 'This is just some data'
+        return context
+
 class BookDetailView(generic.DetailView):
     model = Book
 
@@ -131,3 +138,12 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
             return HttpResponseRedirect(
                 reverse("author-delete", kwargs={"pk": self.object.pk})
             )
+
+
+class LoanedBooksAllListView(PermissionRequiredMixin, generic.ListView):
+    model = BookInstance
+    permission_required = 'catalog.can_mark_returned'
+    template_name = 'catalog/bookinstance_list_borrowed_all.html'
+    paginate_by = 10
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact='o').order_by('due_back')
